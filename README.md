@@ -28,13 +28,13 @@ The following R script illustrates the basic usage of the functions in the packa
 library(rOSCURS);
 
 #--read in a csv file with starting particle locations
-stLLs<-readr::read_csv("OSCURS_StartLocations_TannerCrab.csv"); #only really need LATITUDE (-90:90) and LONGITUDE (-180:180) columns
+stLLs<-readr::read_csv("OSCURS_StartLocations.csv"); #only really need LATITUDE (-90:90) and LONGITUDE (-180:180) columns
 
 #--run the OSCURS model
 #--the following runs the model for nDays per particle location for each year x month/day release
 #--[NOTE: try not to overwhelm the remote server with many tracks at once]
-#--[NOTE: I don't think you can use a path in the base name here]
-res1<-runOSCURS(fnBase="TannerCrab_", #base file name for output tracks
+res1<-runOSCURS(fnBase="Test_", #base file name for output tracks
+                path="./test",  #path to output track files
                 nDays=90,              #number of days to track
                 stYrs=2017,            #years for releases
                 stMDs=list(APR=15),    #months and days for releases
@@ -45,7 +45,7 @@ res1<-runOSCURS(fnBase="TannerCrab_", #base file name for output tracks
 #--convert OSCURS output to list with data.frame and sf tibble with a WGS84 lat/lon crs.
 #--[NOTE: stYrs and stMDs here might be different from above if you broke a large batch of
 #--runs into several smaller batchs so as not to overwhelm the server.]
-lst<-convertOSCURStoTbl(fnBase="./TannerCrab_",               #base name here can include a path
+lst<-convertOSCURStoTbl(fnBase="./test/Test_",                #base name here can include a path
                         stYrs=2017,                           #years for releases
                         stMDs=list(APR=15,MAY=c(1,15),JUN=1), #months and days for releases
                         stLLs=stLLs,
