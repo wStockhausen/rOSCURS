@@ -18,7 +18,7 @@ The following packages are required use rOSCURS:
   * wtsGIS (>= 2019.02.07),
   * wtsUtilities (>= 2016.09.02)
   
-  The latter two packages are available on GitHub at https://github.com/wStockhausen/rOSCURS.git.
+The latter two packages are available on GitHub at https://github.com/wStockhausen/wtsGIS and https://github.com/wStockhausen/wtsUtilities. The remaining are avaialble from CRAN. Each of the above packages may have further dependencies not noted here.
 
 ## Runnning OSCURS
 
