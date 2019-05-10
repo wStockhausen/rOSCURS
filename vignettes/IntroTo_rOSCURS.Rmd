@@ -1,9 +1,23 @@
+---
+title: "Introduction to rOSCURS"
+author: "William T. Stockhausen (AFSC/NMFS/NOAA)"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to rOSCURS}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, include = FALSE}
+  knitr::opts_chunk$set(collapse = TRUE, comment = "##", eval=FALSE)
+```
 # rOSCURS
 An R package to run OSCURS models and process the results.
 
 ## Installation requirements
 
-The following packages are required use rOSCURS:
+The following packages are required to use rOSCURS:
 
   * dplyr (>= 0.8.0.1),
   * ggplot2 (>= 1.0.0),
@@ -28,11 +42,11 @@ The following R script illustrates the basic usage of the functions in the packa
 library(rOSCURS);
 
 #--read in a csv file with starting particle locations as a "tibble"
+stLLs<-readr::read_csv(system.file("extdata","OSCURS_StartLocations.csv", package="rOSCURS"));
 #--the file really only needs columns 
-#----STATION_ID - a unique numeric identifier
 #----LATITUDE   - decimal degrees (-90:90)
 #----LONGITUDE  - decimal degrees (-180:180)
-stLLs<-readr::read_csv("OSCURS_StartLocations.csv");
+#--but has some others including "STATION_ID", which is a unique identifier for each location
 
 #--run the OSCURS model
 #--the following runs the model for nDays per particle location for each year x month/day release
@@ -57,9 +71,9 @@ lst1<-convertOSCURStoTbl(fnBase="./test/Test_",                #base name here c
                          verbose=FALSE);                       #(don't) print diagnostic info
 
 #--plot map with tracks
-lst2<-plotOSCURS(tracks=lst1$tracks, #spatial "tibble" for tracks created by last function
+lst2<-plotOSCURS(tracks=lst1$tracks,  #spatial "tibble" for tracks created by last function
                  stLLs=stLLs,        #dataframe with start locations
-                 idCol="STATION_ID", #column name in stLLs with unique identifier
+                 idCol="STATION_ID", #column name in stLLs with unique identifier (NULL if no such column)
                  alpha=0.5,          #using 50% transparency for track lines (better visiblity for many tracks if < 1)
                  showMap=FALSE);     #(don't) print the map immediately
 print(lst2$map); #print the map 

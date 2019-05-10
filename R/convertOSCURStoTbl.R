@@ -7,10 +7,10 @@
 #' @param fnBase - base for OSCURS output filenames to process (default = "./OSCURS_")
 #' @param stYrs - start years for OSCURS files (vector)
 #' @param stMDs - start months/days for OSCURS files (list)
-#' @param stLLs - file name for csv with table of starting locations for particle releases
+#' @param stLLs - a dataframe with starting locations for particle releases
 #' @param verbose - flag to print diagnostic output
 #'
-#' @return list with elements "dfr" (a data.frame) and "tracks" (a spatial tibble using sf classes)
+#' @return list with elements "dfr" (a dataframe) and "tracks" (a spatial tibble using sf line geometry classes)
 #'
 #' @details Requires packages \code{magrittr} and \code{sf}.
 #' Note that the coordinate reference system assigned to
@@ -28,7 +28,12 @@ convertOSCURStoTbl<-function(fnBase="./OSCURS_",
   # stLLs<-read.csv(stLLs,
   #                 stringsAsFactors = FALSE,
   #                 check.names = FALSE);
-  if (is.null(stLLs)) stop("Must provide parameter 'stLLs', a tibble with initial particle locations.\n")
+  if (is.null(stLLs))
+    stop("Must provide parameter 'stLLs', a dataframe with initial particle locations.\n")
+  if (!inherits(stLLs,"data.frame"))
+    stop("parameter 'stLLs' must be a dataframe or tibble.\n")
+  if (!all(c("LATITUDE","LONGITUDE") %in% names(stLLs)))
+    stop("parameter 'stLLs' must have columns 'LATITUDE' and 'LONGITUDE'.\n")
   stLLs$LONGITUDE <- -stLLs$LONGITUDE;#change sign on longitude
   stLLs$latdeg <- floor(stLLs$LATITUDE);
   stLLs$latmin <- round(60*(stLLs$LATITUDE %% 1));
@@ -47,17 +52,19 @@ convertOSCURStoTbl<-function(fnBase="./OSCURS_",
                      paste(yr,mon,day,ll$latdeg,ll$latmin,ll$londeg,ll$lonmin,sep="_"),
                      ".txt");
           message(paste0("convertOSCURStoTb: processing '",fn,"'\n\n"));
-          lst<-parseFile.OSCURS(fn,verbose);
-          dfr<-rbind(dfr,lst$dfr);
-          if (is.null(tracks)){
-            tracks<-lst$track;
-          } else {
-            tracks<-rbind(tracks,lst$track);
-          }
-        }
-      }
-    }
-  }
+          if (file.exists(fn)){
+            lst<-parseFile.OSCURS(fn,verbose);
+            dfr<-rbind(dfr,lst$dfr);
+            if (is.null(tracks)){
+              tracks<-lst$track;
+            } else {
+              tracks<-rbind(tracks,lst$track);
+            }
+          }#--if file.exist(fn)
+        }#--rw loop
+      }#--day loop
+    }#--mon loop
+  }#--yr loop
   tracks <- tracks %>% sf::st_set_crs(4326);#set crs to WGS84, lat/lon (-180 to 180)
   return(list(dfr=dfr,tracks=tracks));
 }

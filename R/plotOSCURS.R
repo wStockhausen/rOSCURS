@@ -1,19 +1,28 @@
 #'
 #' @title Plot particle tracks from OSCURS model runs on a map
 #'
-#' @description
+#' @description Function to plot particle tracks from OSCURS model runs on a map.
 #'
 #' @param tracks - a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})
-#' @param stLLs - a tibble with starting particle locations (e.g., from reading the initial particle locations csv file using \code{readr::read_csv})
+#' @param stLLs - a dataframe or tibble with starting particle locations (e.g., from reading the initial particle locations csv file using \code{readr::read_csv})
+#' @param idCol - name or number of stLLs column to use as a unique identifier for the start locations (default=NULL. See details)
 #' @param strCRS - character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])
 #' @param basemap - a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)
 #' @param  alpha - transparency for track lines
 #' @param showMap - flag to show the map
 #' @param verbose - flag to print diagnostic info
 #'
-#' @return - a tmap object
+#' @return - a list (see details)
 #'
-#' @details The map object is in the Alaska Albers projection.
+#' @details The returned list has the following elements:
+#'  * map       - a tmap object
+#'  * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
+#'  * startLocs - a sf tibble with starting track locations as points to "roll your own" map
+#'  * basemap   - a basemap to "roll your own" map
+#'
+#' The map object is in the Alaska Albers projection. If 'idCol' is NULL, then each row in stLLs is assumed to
+#' represent a unique starting location.
+#'
 #' Requires packages \code{dply}, \code{magrittr}, \code{sf}, \code{tmap}, \code{wtsGIS}.
 #'
 #' @import magrittr
@@ -22,6 +31,7 @@
 #'
 plotOSCURS<-function(tracks,
                      stLLs,
+                     idCol=NULL,
                      strCRS=tmaptools::get_proj4(3338,output="character"),
                      basemap=wtsGIS::createBaseTMap(layer.land=wtsGIS::getPackagedLayer("Alaska"),
                                                     layer.bathym=wtsGIS::getPackagedLayer("ShelfBathymetry"),
@@ -35,13 +45,20 @@ plotOSCURS<-function(tracks,
   #create the required coordinate systems (WGS84 and Alaska Albers projection [EPSG=3338])
   strWGS84<-tmaptools::get_proj4("longlat",output="character");
 
+  if (is.null(idCol)){
+    stLLs$geomID<-1:nrow(stLLs);
+    idCol<-"geomID";
+  }
+
   #create spatial table with initial particle locations
-  tbl.uniqStartLocs <- unique(stLLs[,c("STATION_ID")]);
+  tbl.uniqStartLocs <- unique(stLLs[,idCol]);
+  # tbl.uniqStartLocs <- tbl.uniqStartLocs %>%
+  #                        dplyr::left_join(stLLs[,c("STATION_ID",
+  #                                                      "DISTRICT",
+  #                                                      "LATITUDE",
+  #                                                      "LONGITUDE")]);
   tbl.uniqStartLocs <- tbl.uniqStartLocs %>%
-                         dplyr::left_join(stLLs[,c("STATION_ID",
-                                                       "DISTRICT",
-                                                       "LATITUDE",
-                                                       "LONGITUDE")]);
+                         dplyr::left_join(stLLs);
   nr<-nrow(tbl.uniqStartLocs);
   for (rw in 1:nr){
     pt <- sf::st_point(x=c(tbl.uniqStartLocs$LONGITUDE[rw],
@@ -83,5 +100,5 @@ plotOSCURS<-function(tracks,
 
   if (showMap) print(map);
 
-  return(map);
+  return(list(map=map,tracks=tracks.DL,startLocs=tbl.uniqStartLocGeoms,basemap=basemap));
 }

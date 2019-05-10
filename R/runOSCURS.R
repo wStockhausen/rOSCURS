@@ -1,14 +1,14 @@
 #'
-#' @title Make a set of OSCURS runs
+#' @title Make a series of OSCURS runs
 #'
-#' @description Function to make a series of OSCURS runs
+#' @description Function to make a series of OSCURS runs and download the results to a set of files.
 #'
 #' @param fnBase - base for filenames (default = "OSCURS_")
 #' @param path - path to use with output filenames (default = ".")
 #' @param nDays - number of days to run model
 #' @param stYrs - vector of years for particle releases
 #' @param stMDs - list of release dates, by month
-#' @param stLLs - a tibble with initial particle lat/lon locations
+#' @param stLLs - a dataframe or tibble with initial particle lat/lon locations (see details below)
 #' @param link - url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")
 #' @param test - flag to print diagnostic output but NOT run OSCURS (useful to see what commands will be sent)
 #' @param verbose - flag to print diagnostic output
@@ -18,6 +18,10 @@
 #' @details Runs the OSCURS model at the link given. An output file is created for each particle release of the
 #' form fnBase_year_month_day_latdegree_latminute_londegree_lonminute.csv, where lat and lon is the initial
 #' particle location.
+#'
+#' The input parameter \code{stLLs} should be a dataframe or tibble. The following columns are required:
+#'  * LATITUDE   - latitude in decimal degrees (-90 to 90)
+#'  * LONGITUDE  - longitude in decimal degrees (-180 to 180)
 #'
 #' @export
 #'
@@ -33,7 +37,12 @@ runOSCURS<-function(fnBase="OSCURS_",
   # stLLs<-read.csv(stLLs,
   #                 stringsAsFactors = FALSE,
   #                 check.names = FALSE);
-  if (is.null(stLLs)) stop("Must provide parameter 'stLLs', a tibble with initial particle locations.\n")
+  if (is.null(stLLs))
+    stop("Must provide parameter 'stLLs', a dataframe with initial particle locations.\n")
+  if (!inherits(stLLs,"data.frame"))
+    stop("parameter 'stLLs' must be a dataframe or tibble.\n")
+  if (!all(c("LATITUDE","LONGITUDE") %in% names(stLLs)))
+    stop("parameter 'stLLs' must have columns 'LATITUDE' and 'LONGITUDE'.\n")
   stLLs$LONGITUDE <- -stLLs$LONGITUDE;#change sign on longitude
   stLLs$latdeg <- floor(stLLs$LATITUDE);
   stLLs$latmin <- round(60*(stLLs$LATITUDE %% 1));

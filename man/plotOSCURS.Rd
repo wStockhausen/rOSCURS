@@ -4,8 +4,9 @@
 \alias{plotOSCURS}
 \title{Plot particle tracks from OSCURS model runs on a map}
 \usage{
-plotOSCURS(tracks, stLLs, strCRS = tmaptools::get_proj4(3338, output =
-  "character"), basemap = wtsGIS::createBaseTMap(layer.land =
+plotOSCURS(tracks, stLLs, idCol = NULL,
+  strCRS = tmaptools::get_proj4(3338, output = "character"),
+  basemap = wtsGIS::createBaseTMap(layer.land =
   wtsGIS::getPackagedLayer("Alaska"), layer.bathym =
   wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
   alpha = 1, showMap = TRUE, verbose = FALSE)
@@ -13,7 +14,9 @@ plotOSCURS(tracks, stLLs, strCRS = tmaptools::get_proj4(3338, output =
 \arguments{
 \item{tracks}{- a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})}
 
-\item{stLLs}{- a tibble with starting particle locations (e.g., from reading the initial particle locations csv file using \code{readr::read_csv})}
+\item{stLLs}{- a dataframe or tibble with starting particle locations (e.g., from reading the initial particle locations csv file using \code{readr::read_csv})}
+
+\item{idCol}{- name or number of stLLs column to use as a unique identifier for the start locations (default=NULL. See details)}
 
 \item{strCRS}{- character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])}
 
@@ -26,12 +29,20 @@ plotOSCURS(tracks, stLLs, strCRS = tmaptools::get_proj4(3338, output =
 \item{verbose}{- flag to print diagnostic info}
 }
 \value{
-- a tmap object
+- a list (see details)
 }
 \description{
-
+Function to plot particle tracks from OSCURS model runs on a map.
 }
 \details{
-The map object is in the Alaska Albers projection.
+The returned list has the following elements:
+ * map       - a tmap object
+ * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
+ * startLocs - a sf tibble with starting track locations as points to "roll your own" map
+ * basemap   - a basemap to "roll your own" map
+
+The map object is in the Alaska Albers projection. If 'idCol' is NULL, then each row in stLLs is assumed to
+represent a unique starting location.
+
 Requires packages \code{dply}, \code{magrittr}, \code{sf}, \code{tmap}, \code{wtsGIS}.
 }

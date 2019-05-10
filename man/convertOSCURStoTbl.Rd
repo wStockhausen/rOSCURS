@@ -15,12 +15,12 @@ convertOSCURStoTbl(fnBase = "./OSCURS_", stYrs = 2017,
 
 \item{stMDs}{- start months/days for OSCURS files (list)}
 
-\item{stLLs}{- file name for csv with table of starting locations for particle releases}
+\item{stLLs}{- a dataframe with starting locations for particle releases}
 
 \item{verbose}{- flag to print diagnostic output}
 }
 \value{
-list with elements "dfr" (a data.frame) and "tracks" (a spatial tibble using sf classes)
+list with elements "dfr" (a dataframe) and "tracks" (a spatial tibble using sf line geometry classes)
 }
 \description{
 A function to collate sets of OSCURS model output created using \code{runOSCURS}

@@ -12,12 +12,15 @@ parseFile.OSCURS(fn, verbose = FALSE)
 \item{verbose}{- flag to print diagnostic info}
 }
 \value{
-list with elements "dfr" and "track". The latter is a spatial tibble using sf classes.
+a list with elements "dfr" and "track". The latter is a spatial tibble using a sf line class to represent the track.
 }
 \description{
 Function to parse an OSCURS output trajectory file to a dataframe.
 }
 \details{
-Parses output text file from OSCURS run. Requires packages \code{stringr}, \code{tibble} and
-\code{tmap_tools}.
+Parses output text file from OSCURS run.  The returned object is a list with elements "dfr" and "track". 'dfr' is a dataframe with
+each row representing a time and position along the track. "track is a spatial tibble using an
+sf line geometry class to represent the track.
+
+Requires packages \code{stringr}, \code{tibble} and \code{tmap_tools}.
 }

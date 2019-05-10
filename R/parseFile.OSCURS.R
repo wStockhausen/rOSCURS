@@ -6,10 +6,13 @@
 #' @param fn - name of file to parse
 #' @param verbose - flag to print diagnostic info
 #'
-#' @return list with elements "dfr" and "track". The latter is a spatial tibble using sf classes.
+#' @return a list with elements "dfr" and "track". The latter is a spatial tibble using a sf line class to represent the track.
 #'
-#' @details Parses output text file from OSCURS run. Requires packages \code{stringr}, \code{tibble} and
-#' \code{tmap_tools}.
+#' @details Parses output text file from OSCURS run.  The returned object is a list with elements "dfr" and "track". 'dfr' is a dataframe with
+#' each row representing a time and position along the track. "track is a spatial tibble using an
+#' sf line geometry class to represent the track.
+#'
+#' Requires packages \code{stringr}, \code{tibble} and \code{tmap_tools}.
 #'
 #' @export
 #'

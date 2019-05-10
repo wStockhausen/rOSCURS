@@ -2,7 +2,7 @@
 % Please edit documentation in R/runOSCURS.R
 \name{runOSCURS}
 \alias{runOSCURS}
-\title{Make a set of OSCURS runs}
+\title{Make a series of OSCURS runs}
 \usage{
 runOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
   stMDs = list(APR = 15, MAY = c(1, 15), JUN = 1), stLLs = NULL,
@@ -20,7 +20,7 @@ runOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
 
 \item{stMDs}{- list of release dates, by month}
 
-\item{stLLs}{- a tibble with initial particle lat/lon locations}
+\item{stLLs}{- a dataframe or tibble with initial particle lat/lon locations (see details below)}
 
 \item{link}{- url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")}
 
@@ -29,10 +29,14 @@ runOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
 \item{verbose}{- flag to print diagnostic output}
 }
 \description{
-Function to make a series of OSCURS runs
+Function to make a series of OSCURS runs and download the results to a set of files.
 }
 \details{
 Runs the OSCURS model at the link given. An output file is created for each particle release of the
 form fnBase_year_month_day_latdegree_latminute_londegree_lonminute.csv, where lat and lon is the initial
 particle location.
+
+The input parameter \code{stLLs} should be a dataframe or tibble. The following columns are required:
+ * LATITUDE   - latitude in decimal degrees (-90 to 90)
+ * LONGITUDE  - longitude in decimal degrees (-180 to 180)
 }
