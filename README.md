@@ -20,9 +20,12 @@ The following packages are required use rOSCURS:
   
 The latter two packages are available on GitHub at https://github.com/wStockhausen/wtsGIS and https://github.com/wStockhausen/wtsUtilities. The remaining are avaialble from CRAN. Each of the above packages may have further dependencies not noted here.
 
+## Creating the package from the RStudio
+To install the rOSCURS package using the RStudio project from GitHub, you will need to "Build Source Package" under the "Build" menu in RStudio and then install the package from its .gz archive in order to get the user guides and package vignettes. If you simply "Clean and build" the project, you won't get the user guides and vignettes.
+
 ## Runnning OSCURS
 
-The following R script illustrates the basic usage of the functions in the package:
+The following R script (also available via the package vignettes) illustrates the basic usage of the functions in the package:
 
 ```{r}
 library(rOSCURS);
@@ -32,7 +35,7 @@ library(rOSCURS);
 #----STATION_ID - a unique numeric identifier
 #----LATITUDE   - decimal degrees (-90:90)
 #----LONGITUDE  - decimal degrees (-180:180)
-stLLs<-readr::read_csv("OSCURS_StartLocations.csv");
+stLLs<-readr::read_csv(system.file("extdata","OSCURS_StartLocations.csv", package="rOSCURS"));
 
 #--run the OSCURS model
 #--the following runs the model for nDays per particle location for each year x month/day release
@@ -64,3 +67,8 @@ lst2<-plotOSCURS(tracks=lst1$tracks, #spatial "tibble" for tracks created by las
                  showMap=FALSE);     #(don't) print the map immediately
 print(lst2$map); #print the map 
 ```
+
+The map resulting from making OSCURS runs for \code{stYrs=2017} and \code{stMDs=list(APR=15,MAY=c(1,15),JUN=1)} with
+the start locations from the csv file above is:
+
+![Map of the OSCURS tracks using the above code.](vignettes/mapOSCURS.png)
