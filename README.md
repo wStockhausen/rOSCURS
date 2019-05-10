@@ -68,7 +68,7 @@ lst2<-plotOSCURS(tracks=lst1$tracks, #spatial "tibble" for tracks created by las
 print(lst2$map); #print the map 
 ```
 
-The map resulting from making OSCURS runs for \code{stYrs=2017} and \code{stMDs=list(APR=15,MAY=c(1,15),JUN=1)} with
+The map resulting from making OSCURS runs for `stYrs=2017` and `stMDs=list(APR=15,MAY=c(1,15),JUN=1)` with
 the start locations from the csv file above is:
 
 ![Map of the OSCURS tracks using the above code.](vignettes/mapOSCURS.png)
