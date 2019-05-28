@@ -4,9 +4,10 @@
 \alias{doOSCURS}
 \title{Run OSCURS and plot results}
 \usage{
-doOSCURS(fnBase = "OSCURS_", nDays = 90, stYrs = 2017,
+doOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
   stMDs = list(APR = 15), fnStartLocs = "OSCURS_StartLocations.csv",
   link = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
+  randNum = round(runif(1, 1, 1e+05)),
   strCRS = tmaptools::get_proj4(3338, output = "character"),
   basemap = wtsGIS::createBaseTMap(layer.land =
   wtsGIS::getPackagedLayer("Alaska"), layer.bathym =
@@ -14,7 +15,9 @@ doOSCURS(fnBase = "OSCURS_", nDays = 90, stYrs = 2017,
   alpha = 1, showMap = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{fnBase}{- base for output filenames (default = "./OSCURS_")}
+\item{fnBase}{- base for output filenames (default = "OSCURS_")}
+
+\item{path}{- path to folder in which to store output files}
 
 \item{nDays}{- number of days to run model}
 
@@ -25,6 +28,8 @@ doOSCURS(fnBase = "OSCURS_", nDays = 90, stYrs = 2017,
 \item{fnStartLocs}{- filename for csv file with initial particle lat/lon locations}
 
 \item{link}{- url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")}
+
+\item{randNum}{- random number to add to server-side file name to ensure uniqueness}
 
 \item{strCRS}{- character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])}
 

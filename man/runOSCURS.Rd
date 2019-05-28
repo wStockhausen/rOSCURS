@@ -7,7 +7,7 @@
 runOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
   stMDs = list(APR = 15, MAY = c(1, 15), JUN = 1), stLLs = NULL,
   link = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
-  test = TRUE, verbose = FALSE)
+  randNum = round(runif(1, 1, 1e+05)), test = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{fnBase}{- base for filenames (default = "OSCURS_")}
@@ -23,6 +23,8 @@ runOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
 \item{stLLs}{- a dataframe or tibble with initial particle lat/lon locations (see details below)}
 
 \item{link}{- url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")}
+
+\item{randNum}{- random number to add to server-side file name to ensure uniqueness}
 
 \item{test}{- flag to print diagnostic output but NOT run OSCURS (useful to see what commands will be sent)}
 

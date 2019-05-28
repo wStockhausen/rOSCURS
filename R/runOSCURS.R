@@ -10,6 +10,7 @@
 #' @param stMDs - list of release dates, by month
 #' @param stLLs - a dataframe or tibble with initial particle lat/lon locations (see details below)
 #' @param link - url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")
+#' @param randNum - random number to add to server-side file name to ensure uniqueness
 #' @param test - flag to print diagnostic output but NOT run OSCURS (useful to see what commands will be sent)
 #' @param verbose - flag to print diagnostic output
 #'
@@ -32,6 +33,7 @@ runOSCURS<-function(fnBase="OSCURS_",
                     stMDs=list(APR=15,MAY=c(1,15),JUN=1),#months and days for releases
                     stLLs=NULL,
                     link="https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
+                    randNum=round(runif(1,1,100000)),
                     test=TRUE,
                     verbose=FALSE){
   # stLLs<-read.csv(stLLs,
@@ -52,7 +54,7 @@ runOSCURS<-function(fnBase="OSCURS_",
   if (tolower(Sys.info()["sysname"])=="windows"){
     str0<-paste0('wget --wait=60 -O !!lclFile.txt "!!link',
                  'cl=1&latdeg=!!latdeg&latmin=!!latmin&londeg=!!londeg&lonmin=!!lonmin&',
-                 'year=!!year&mon=!!mon&day=!!day&nnnn=!!nnn&factor=1&angle=0&ddfac=1&outfile=!!remFile.csv"');
+                 'year=!!year&mon=!!mon&day=!!day&nnnn=!!nnn&factor=1&angle=0&ddfac=1&outfile=!!remFile.csv" --no-check-certificate');
   } else {
     str0<-paste0('curl -o !!lclFile.txt "!!link',
                  'cl=1&latdeg=!!latdeg&latmin=!!latmin&londeg=!!londeg&lonmin=!!lonmin&',
@@ -70,8 +72,10 @@ runOSCURS<-function(fnBase="OSCURS_",
         for (rw in 1:nRws){
           ll <- stLLs[rw,c("latdeg","latmin","londeg","lonmin")];
           fnR<-paste0(fnBase,
-                      paste(yr,mon,day,ll$latdeg,ll$latmin,ll$londeg,ll$lonmin,sep="_")); #remote file
-          fnL<-file.path(path,fnR);                                                       #local file
+                      paste(yr,mon,day,ll$latdeg,ll$latmin,ll$londeg,ll$lonmin,randNum,sep="_")); #remote file
+          fnL<-paste0(fnBase,
+                      paste(yr,mon,day,ll$latdeg,ll$latmin,ll$londeg,ll$lonmin,sep="_")); #local file without path
+          fnL<-file.path(path,fnL);                                                       #local file with path
           str1<-str0;
           str1<-gsub("!!lclFile",fnL,      str1,fixed=TRUE);
           str1<-gsub("!!remFile",fnR,      str1,fixed=TRUE);

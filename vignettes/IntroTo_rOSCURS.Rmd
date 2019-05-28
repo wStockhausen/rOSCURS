@@ -58,6 +58,8 @@ runOSCURS(fnBase="Test_",        #base file name for output tracks
           stYrs=2017,            #years for releases
           stMDs=list(APR=15),    #months and days for releases
           stLLs=stLLs,           #the "tibble" with start locations
+          link="https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?", #default link to use
+          randNum=round(runif(1,1,100000)),                              #random number to add for server-side file names to ensure uniqueness
           test=FALSE,            #(don't) run the function without running OSCURS (to see server commands)
           verbose=TRUE);         #print diagnostic info
 

@@ -3,12 +3,14 @@
 #'
 #' @description Function to run OSCURS and plot results.
 #'
-#' @param fnBase - base for output filenames (default = "./OSCURS_")
+#' @param fnBase - base for output filenames (default = "OSCURS_")
+#' @param path - path to folder in which to store output files
 #' @param nDays - number of days to run model
 #' @param stYrs - vector of years for particle releases
 #' @param stMDs - list of release dates, by month
 #' @param fnStartLocs - filename for csv file with initial particle lat/lon locations
 #' @param link - url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")
+#' @param randNum - random number to add to server-side file name to ensure uniqueness
 #' @param strCRS - character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])
 #' @param basemap - a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)
 #' @param  alpha - transparency for track lines
@@ -22,11 +24,13 @@
 #' @export
 #'
 doOSCURS<-function(fnBase="OSCURS_",
+                   path=".",
                    nDays=90,           #number of days to track
                    stYrs=2017,         #years for releases
                    stMDs=list(APR=15), #months and days for releases
                    fnStartLocs="OSCURS_StartLocations.csv",
                    link="https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
+                   randNum=round(runif(1,1,100000)),
                    strCRS=tmaptools::get_proj4(3338,output="character"),
                    basemap=wtsGIS::createBaseTMap(layer.land=wtsGIS::getPackagedLayer("Alaska"),
                                                   layer.bathym=wtsGIS::getPackagedLayer("ShelfBathymetry"),
@@ -40,15 +44,18 @@ doOSCURS<-function(fnBase="OSCURS_",
 
   #--run the OSCURS model for all years, months, days, and particle release locations
   res<-runOSCURS(fnBase=fnBase,
+                 path=path,
                  nDays=nDays,         #number of days to track
                  stYrs=stYrs,         #years for releases
                  stMDs=stMDs,         #months and days for releases
                  stLLs=startLocs,
+                 link=link,
+                 randNum=randNum,
                  test=FALSE,
                  verbose=verbose);
 
   #convert OSCURS output to list with data.frame and sf tibble with a WGS84 lat/lon crs.
-  lst<-convertOSCURStoTbl(fnBase=fnBase,
+  lst<-convertOSCURStoTbl(fnBase=file.path(path,fnBase),
                           stYrs=stYrs,         #years for releases
                           stMDs=stMDs,         #months and days for releases
                           stLLs=startLocs,
