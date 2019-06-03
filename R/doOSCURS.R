@@ -9,6 +9,9 @@
 #' @param stYrs - vector of years for particle releases
 #' @param stMDs - list of release dates, by month
 #' @param fnStartLocs - filename for csv file with initial particle lat/lon locations
+#' @param wcsc - wind/current speed coefficient (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+#' @param wad - wind angle deviation (default=0.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+#' @param gsf - geostrophic speed factor (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
 #' @param link - url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")
 #' @param randNum - random number to add to server-side file name to ensure uniqueness
 #' @param strCRS - character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])
@@ -17,9 +20,15 @@
 #' @param showMap - flag to show the map
 #' @param verbose - flag to print diagnostic info
 #'
-#' @return list with elements "map" and  "tracks".
+#' @return same list as \code{plotOSCURS} (see @details).
 #'
 #' @details Requires packages \code{readr}, \code{tmaptools}, \code{wtsGIS}.
+#' The returned list has the following elements:
+#'  * map       - a tmap object
+#'  * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
+#'  * startLocs - a sf tibble with starting track locations as points to "roll your own" map
+#'  * basemap   - a basemap to "roll your own" map
+
 #'
 #' @export
 #'
@@ -29,6 +38,9 @@ doOSCURS<-function(fnBase="OSCURS_",
                    stYrs=2017,         #years for releases
                    stMDs=list(APR=15), #months and days for releases
                    fnStartLocs="OSCURS_StartLocations.csv",
+                   wcsc=1.0,
+                   wad=0.0,
+                   gsf=1.0,
                    link="https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
                    randNum=round(runif(1,1,100000)),
                    strCRS=tmaptools::get_proj4(3338,output="character"),
@@ -49,6 +61,9 @@ doOSCURS<-function(fnBase="OSCURS_",
                  stYrs=stYrs,         #years for releases
                  stMDs=stMDs,         #months and days for releases
                  stLLs=startLocs,
+                 wcsc=wcsc,
+                 wad=wad,
+                 gsf=gsf,
                  link=link,
                  randNum=randNum,
                  test=FALSE,
@@ -69,6 +84,6 @@ doOSCURS<-function(fnBase="OSCURS_",
                   showMap=showMap,
                   verbose=verbose);
 
-  return(map=map,tracks=lst$tracks);
+  return(map);
 }
 

@@ -52,11 +52,6 @@ plotOSCURS<-function(tracks,
 
   #create spatial table with initial particle locations
   tbl.uniqStartLocs <- unique(stLLs[,idCol]);
-  # tbl.uniqStartLocs <- tbl.uniqStartLocs %>%
-  #                        dplyr::left_join(stLLs[,c("STATION_ID",
-  #                                                      "DISTRICT",
-  #                                                      "LATITUDE",
-  #                                                      "LONGITUDE")]);
   tbl.uniqStartLocs <- tbl.uniqStartLocs %>%
                          dplyr::left_join(stLLs);
   nr<-nrow(tbl.uniqStartLocs);

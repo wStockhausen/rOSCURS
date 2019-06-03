@@ -6,6 +6,7 @@
 \usage{
 doOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
   stMDs = list(APR = 15), fnStartLocs = "OSCURS_StartLocations.csv",
+  wcsc = 1, wad = 0, gsf = 1,
   link = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
   randNum = round(runif(1, 1, 1e+05)),
   strCRS = tmaptools::get_proj4(3338, output = "character"),
@@ -27,6 +28,12 @@ doOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
 
 \item{fnStartLocs}{- filename for csv file with initial particle lat/lon locations}
 
+\item{wcsc}{- wind/current speed coefficient (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+
+\item{wad}{- wind angle deviation (default=0.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+
+\item{gsf}{- geostrophic speed factor (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+
 \item{link}{- url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")}
 
 \item{randNum}{- random number to add to server-side file name to ensure uniqueness}
@@ -42,11 +49,16 @@ doOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
 \item{verbose}{- flag to print diagnostic info}
 }
 \value{
-list with elements "map" and  "tracks".
+same list as \code{plotOSCURS} (see @details).
 }
 \description{
 Function to run OSCURS and plot results.
 }
 \details{
 Requires packages \code{readr}, \code{tmaptools}, \code{wtsGIS}.
+The returned list has the following elements:
+ * map       - a tmap object
+ * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
+ * startLocs - a sf tibble with starting track locations as points to "roll your own" map
+ * basemap   - a basemap to "roll your own" map
 }

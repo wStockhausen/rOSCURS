@@ -9,6 +9,9 @@
 #' @param stYrs - vector of years for particle releases
 #' @param stMDs - list of release dates, by month
 #' @param stLLs - a dataframe or tibble with initial particle lat/lon locations (see details below)
+#' @param wcsc - wind/current speed coefficient (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+#' @param wad - wind angle deviation (default=0.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+#' @param gsf - geostrophic speed factor (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
 #' @param link - url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")
 #' @param randNum - random number to add to server-side file name to ensure uniqueness
 #' @param test - flag to print diagnostic output but NOT run OSCURS (useful to see what commands will be sent)
@@ -33,6 +36,9 @@ runOSCURS<-function(fnBase="OSCURS_",
                     stMDs=list(APR=15,MAY=c(1,15),JUN=1),#months and days for releases
                     stLLs=NULL,
                     link="https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
+                    wcsc=1.0,
+                    wad=0.0,
+                    gsf=1.0,
                     randNum=round(runif(1,1,100000)),
                     test=TRUE,
                     verbose=FALSE){
@@ -54,14 +60,17 @@ runOSCURS<-function(fnBase="OSCURS_",
   if (tolower(Sys.info()["sysname"])=="windows"){
     str0<-paste0('wget --wait=60 -O !!lclFile.txt "!!link',
                  'cl=1&latdeg=!!latdeg&latmin=!!latmin&londeg=!!londeg&lonmin=!!lonmin&',
-                 'year=!!year&mon=!!mon&day=!!day&nnnn=!!nnn&factor=1&angle=0&ddfac=1&outfile=!!remFile.csv" --no-check-certificate');
+                 'year=!!year&mon=!!mon&day=!!day&nnnn=!!nnn&factor=!!wcsc&angle=!!wad&ddfac=!!gsf&outfile=!!remFile.csv" --no-check-certificate');
   } else {
     str0<-paste0('curl -o !!lclFile.txt "!!link',
                  'cl=1&latdeg=!!latdeg&latmin=!!latmin&londeg=!!londeg&lonmin=!!lonmin&',
-                 'year=!!year&mon=!!mon&day=!!day&nnnn=!!nnn&factor=1&angle=0&ddfac=1&outfile=!!remFile.csv"');
+                 'year=!!year&mon=!!mon&day=!!day&nnnn=!!nnn&factor=!!wcsc&angle=!!wad&ddfac=!!gsf&outfile=!!remFile.csv"');
   }
 
   str0 <- gsub("!!link",link,str0,fixed=TRUE);
+  str0 <- gsub("!!wcsc",wcsc,str0,fixed=TRUE);
+  str0 <- gsub("!!wad", wad,str0,fixed=TRUE);
+  str0 <- gsub("!!gsf", gsf,str0,fixed=TRUE);
 
   if (!dir.exists(path)) dir.create(path);
 
