@@ -12,7 +12,8 @@ plotPTI(tracks, text_size = 1, strCRS = tmaptools::get_proj4(3338,
   current.projection = tmaptools::get_proj4("longlat", output =
   "character"), projection = strCRS), gridLines = list(x = seq(from =
   -165, to = -135, by = 5), y = seq(from = 48, to = 59, by = 2), projection
-  = strWGS84), alpha = 0.7, showMap = TRUE, verbose = FALSE)
+  = strWGS84), style = "white", color = "blue", alpha = 1,
+  palette = NULL, showMap = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{tracks}{- a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})}
@@ -26,6 +27,8 @@ plotPTI(tracks, text_size = 1, strCRS = tmaptools::get_proj4(3338,
 \item{bounding_box}{- bounding box for map (or NULL to calculate from track limits)}
 
 \item{gridLines}{- list w/ info to plot grid lines on map (or NULL for no grid lines)}
+
+\item{color}{- color for track lines (or column name)}
 
 \item{alpha}{- transparency for track lines}
 

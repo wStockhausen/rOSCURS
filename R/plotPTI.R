@@ -9,6 +9,7 @@
 #' @param basemap - a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)
 #' @param bounding_box - bounding box for map (or NULL to calculate from track limits)
 #' @param gridLines - list w/ info to plot grid lines on map (or NULL for no grid lines)
+#' @param color - color for track lines (or column name)
 #' @param alpha - transparency for track lines
 #' @param showMap - flag to show the map
 #' @param verbose - flag to print diagnostic info
@@ -44,11 +45,22 @@ plotPTI<-function(tracks,
                    gridLines=list(x=seq(from=-165,to=-135,by=5),
                                   y=seq(from=48,  to=59,  by=2),
                                   projection=strWGS84),
-                   alpha=0.7,
+                   style="white",
+                   color="blue",
+                   alpha=1.0,
+                   palette=NULL,
                    showMap=TRUE,
                    verbose=FALSE
                    ){
+  opts<-tmap::tmap_options();
+  on.exit(tmap::tmap_options(opts));#--reset options
+
+  tmap::tm_style(style); #--set style for map
+
   nr<-nrow(tracks);
+  message(paste0("number of tracks to plot is:",nr));
+  tmap::tmap_options(max.categories=nr);
+  message(paste0("number of categories is:",tmap::tmap_options()$max.categories));
 
   #create the required coordinate system for lat/lon coordinates (WGS84)
   strWGS84<-tmaptools::get_proj4("longlat",output="character");
@@ -120,26 +132,40 @@ plotPTI<-function(tracks,
     basemap$tm_shape$bbox <- bounding_box;
   }
 
+  palette_text<-NULL;
+  if (!is.null(palette))
+    palette_text<-wtsUtilities::addTransparency(palette,alpha=1.0);
+
   #create the map
   maxYear<-as.character(max(as.numeric(tracks.DL$year)));
   map<-basemap;
+  #--start locations
   map<-map+tmap::tm_shape(tbl.uniqStartLocGeoms)+
                   tmap::tm_squares(col="black",size=0.02);
+  #past trajectories
   map<-map+tmap::tm_shape(tracks.DL[tracks.DL$year!=maxYear,])+
-                  tmap::tm_lines(col="blue",lwd=2.0,alpha=alpha);
+                  tmap::tm_lines(col=color,lwd=3.0,alpha=alpha,
+                                 palette=palette,stretch.palette=TRUE);
   map<-map+tmap::tm_shape(tbl.uniqEndLocGeoms[tbl.uniqEndLocGeoms$year!=maxYear,])+
-                  tmap::tm_squares(col="blue",size=0.02)+
-                  tmap::tm_text("year",size=0.8*text_size,col="blue",auto.placement=TRUE);
+                  tmap::tm_squares(col=color,size=0.02,alpha=1.0,
+                                   palette=palette,stretch.palette=TRUE)+
+                  tmap::tm_text("year",size=0.8*text_size,col=color,alpha=1.0,
+                                palette=palette_text,stretch.palette=TRUE,
+                                auto.placement=TRUE);
+  #--current trajectory
   map<-map+tmap::tm_shape(tracks.DL[tracks.DL$year==maxYear,])+
-                  tmap::tm_lines(col="black",lwd=3.0);
+                  tmap::tm_lines(col="black",lwd=4.0,alpha=1.0);
   map<-map+tmap::tm_shape(tbl.uniqEndLocGeoms[tbl.uniqEndLocGeoms$year==maxYear,])+
-                  tmap::tm_squares(col="black",size=0.04)+
-                  tmap::tm_text("year",size=text_size,col="black",auto.placement=TRUE);
+                  tmap::tm_squares(col="black",size=0.04,alpha=1.0)+
+                  tmap::tm_text("year",size=text_size,col="black",alpha=1.0,
+                                auto.placement=TRUE);
+  #--legend
   map<-map+tmap::tm_legend(legend.show=FALSE);
 
   if (!is.null(gridLines))
     map <- map + tmap::tm_grid(x=gridLines$x,
                                y=gridLines$y,
+                               alpha=0.5,
                                projection=gridLines$projection);
 
 
