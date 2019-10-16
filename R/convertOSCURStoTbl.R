@@ -51,7 +51,7 @@ convertOSCURStoTbl<-function(fnBase="./OSCURS_",
           fn<-paste0(fnBase,
                      paste(yr,mon,day,ll$latdeg,ll$latmin,ll$londeg,ll$lonmin,sep="_"),
                      ".txt");
-          message(paste0("convertOSCURStoTb: processing '",fn,"'\n\n"));
+          message(paste0("convertOSCURStoTbl: processing '",fn,"'\n\n"));
           if (file.exists(fn)){
             lst<-parseFile.OSCURS(fn,verbose);
             dfr<-rbind(dfr,lst$dfr);
@@ -60,7 +60,9 @@ convertOSCURStoTbl<-function(fnBase="./OSCURS_",
             } else {
               tracks<-rbind(tracks,lst$track);
             }
-          }#--if file.exist(fn)
+          } else {
+            message(paste0("--convertOSCURStoTbl: Skipping this one: file does not exist.\n\n"));
+          } #--if (file.exists(fn))
         }#--rw loop
       }#--day loop
     }#--mon loop

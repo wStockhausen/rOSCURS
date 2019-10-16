@@ -44,5 +44,5 @@ The returned list has the following elements:
 The map object is in the Alaska Albers projection. If 'idCol' is NULL, then each row in stLLs is assumed to
 represent a unique starting location.
 
-Requires packages \code{dply}, \code{magrittr}, \code{sf}, \code{tmap}, \code{wtsGIS}.
+Requires packages \code{dplyr}, \code{magrittr}, \code{sf}, \code{tmap}, \code{tmaptools}, \code{wtsGIS}.
 }
