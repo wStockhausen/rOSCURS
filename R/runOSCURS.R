@@ -39,7 +39,7 @@ runOSCURS<-function(fnBase="OSCURS_",
                     wcsc=1.0,
                     wad=0.0,
                     gsf=1.0,
-                    randNum=round(runif(1,1,100000)),
+                    randNum=round(stats::runif(1,1,100000)),
                     test=TRUE,
                     verbose=FALSE){
   # stLLs<-read.csv(stLLs,

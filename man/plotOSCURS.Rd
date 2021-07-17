@@ -4,12 +4,17 @@
 \alias{plotOSCURS}
 \title{Plot particle tracks from OSCURS model runs on a map}
 \usage{
-plotOSCURS(tracks, stLLs, idCol = NULL,
+plotOSCURS(
+  tracks,
+  stLLs,
+  idCol = NULL,
   strCRS = tmaptools::get_proj4(3338, output = "character"),
-  basemap = wtsGIS::createBaseTMap(layer.land =
-  wtsGIS::getPackagedLayer("Alaska"), layer.bathym =
-  wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
-  alpha = 1, showMap = TRUE, verbose = FALSE)
+  basemap = wtsGIS::createBaseTMap(layer.land = wtsGIS::getPackagedLayer("Alaska"),
+    layer.bathym = wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
+  alpha = 1,
+  showMap = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{tracks}{- a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})}

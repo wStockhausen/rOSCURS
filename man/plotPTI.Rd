@@ -4,19 +4,41 @@
 \alias{plotPTI}
 \title{Plot particle tracks from OSCURS model runs on a map for the PAPA Trajectory Index}
 \usage{
-plotPTI(tracks, text_size = 1, strCRS = tmaptools::get_proj4(3338,
-  output = "character"), basemap = wtsGIS::createBaseTMap(layer.land =
-  wtsGIS::getPackagedLayer("Alaska"), layer.bathym =
-  wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
+plotPTI(
+  tracks,
+  trackID_col = "year",
+  emphasizeID = as.character(max(as.numeric(tracks[[trackID_col]]))),
+  addText = TRUE,
+  text_col = "year",
+  text_size = 1,
+  strCRS = tmaptools::get_proj4(3338, output = "character"),
+  basemap = wtsGIS::createBaseTMap(layer.land = wtsGIS::getPackagedLayer("Alaska"),
+    layer.bathym = wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
   bounding_box = tmaptools::bb(xlim = c(-165, -135), ylim = c(48, 59),
-  current.projection = tmaptools::get_proj4("longlat", output =
-  "character"), projection = strCRS), gridLines = list(x = seq(from =
-  -165, to = -135, by = 5), y = seq(from = 48, to = 59, by = 2), projection
-  = strWGS84), style = "white", color = "blue", alpha = 1,
-  palette = NULL, showMap = TRUE, verbose = FALSE)
+    current.projection = tmaptools::get_proj4("longlat", output = "character"), projection
+    = strCRS),
+  gridLines = list(x = seq(from = -165, to = -135, by = 5), y = seq(from = 48, to = 59,
+    by = 2), projection = tmaptools::get_proj4("longlat", output = "character")),
+  style = NULL,
+  color_lines = "blue",
+  color_text = "blue",
+  alpha_lines = 1,
+  alpha_text = 1,
+  palette = NULL,
+  showMap = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{tracks}{- a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})}
+
+\item{trackID_col}{- column with unique track id}
+
+\item{emphasizeID}{- if not NULL, id of track to emphasize (default=\code{as.character(max(as.numeric(tracks[[trackID_col]])))})}
+
+\item{addText}{- flag (T/F) to add text in \code{text_col} to end point of each track}
+
+\item{text_col}{- column for text labels}
 
 \item{text_size}{- size for "year" label on last end point (others will be 0.8*text_size)}
 
@@ -28,9 +50,17 @@ plotPTI(tracks, text_size = 1, strCRS = tmaptools::get_proj4(3338,
 
 \item{gridLines}{- list w/ info to plot grid lines on map (or NULL for no grid lines)}
 
-\item{color}{- color for track lines (or column name)}
+\item{style}{- \code{tmap} style for map (default is NULL, which uses current tmap style)}
 
-\item{alpha}{- transparency for track lines}
+\item{color_lines}{- color for track lines (or column name)}
+
+\item{color_text}{- color for track line text (or column name)}
+
+\item{alpha_lines}{- transparency for track lines}
+
+\item{alpha_text}{- transparency for track line text}
+
+\item{palette}{- color palette for text}
 
 \item{showMap}{- flag to show the map}
 

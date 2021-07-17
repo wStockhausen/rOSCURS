@@ -4,9 +4,13 @@
 \alias{convertOSCURStoTbl}
 \title{Collates sets of OSCURS model output to a list with a data.frame and a spatial tibble of type sf}
 \usage{
-convertOSCURStoTbl(fnBase = "./OSCURS_", stYrs = 2017,
-  stMDs = list(APR = 15, MAY = c(1, 15), JUN = 1), stLLs = NULL,
-  verbose = FALSE)
+convertOSCURStoTbl(
+  fnBase = "./OSCURS_",
+  stYrs = 2017,
+  stMDs = list(APR = 15, MAY = c(1, 15), JUN = 1),
+  stLLs = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{fnBase}{- base for OSCURS output filenames to process (default = "./OSCURS_")}

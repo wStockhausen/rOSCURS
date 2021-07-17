@@ -4,11 +4,21 @@
 \alias{runOSCURS}
 \title{Make a series of OSCURS runs}
 \usage{
-runOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
-  stMDs = list(APR = 15, MAY = c(1, 15), JUN = 1), stLLs = NULL,
+runOSCURS(
+  fnBase = "OSCURS_",
+  path = ".",
+  nDays = 90,
+  stYrs = 2017,
+  stMDs = list(APR = 15, MAY = c(1, 15), JUN = 1),
+  stLLs = NULL,
   link = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
-  wcsc = 1, wad = 0, gsf = 1, randNum = round(runif(1, 1, 1e+05)),
-  test = TRUE, verbose = FALSE)
+  wcsc = 1,
+  wad = 0,
+  gsf = 1,
+  randNum = round(stats::runif(1, 1, 1e+05)),
+  test = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{fnBase}{- base for filenames (default = "OSCURS_")}

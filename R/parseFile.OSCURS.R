@@ -48,16 +48,19 @@ parseFile.OSCURS<-function(fn,
 
   dfr<-data.frame(dayStart=dt[1],latStart=lt[1],lonStart=ln[1],
                   date=dt,elapsedTime=edt,lat=lt,lon=ln,stringsAsFactors=FALSE);
-  if (verbose) print(head(dfr))
+  if (verbose) print(utils::head(dfr))
   sfg.line<-sf::st_linestring(as.matrix(dfr[,c("lon","lat")]),dim="XY");
   if (verbose) print(sfg.line);
   if (verbose) cat("class = ",class(sfg.line),"\n");
   sfc.line<-sf::st_sfc(sfg.line);
-  if (verbose) str(tibble::tibble(dayStart=dt[1],latStart=lt[1],lonStart=ln[1],
+  if (verbose) utils::str(tibble::tibble(dayStart=dt[1],latStart=lt[1],lonStart=ln[1],
                                   dayEnd=dt[nd+2],latEnd=lt[nd+2],lonEnd=ln[nd+2]));
-  tbl.track<-tmaptools::append_data(sfc.line,
-                                    tibble::tibble(dayStart=dt[1],latStart=lt[1],lonStart=ln[1],
-                                                   dayEnd=dt[nd+2],latEnd=lt[nd+2],lonEnd=ln[nd+2]),
-                                   fixed.order=TRUE);
+  # tbl.track<-tmaptools::append_data(sfc.line,
+  #                                   tibble::tibble(dayStart=dt[1],latStart=lt[1],lonStart=ln[1],
+  #                                                  dayEnd=dt[nd+2],latEnd=lt[nd+2],lonEnd=ln[nd+2]),
+  #                                  fixed.order=TRUE);
+  tbl.track<-sf::st_sf(tibble::tibble(dayStart=dt[1], latStart=lt[1], lonStart=ln[1],
+                                      dayEnd=dt[nd+2],latEnd=lt[nd+2],lonEnd=ln[nd+2],
+                                      geometry=sfc.line));
   return(list(dfr=dfr,track=tbl.track));
 }

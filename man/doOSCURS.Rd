@@ -4,16 +4,25 @@
 \alias{doOSCURS}
 \title{Run OSCURS and plot results}
 \usage{
-doOSCURS(fnBase = "OSCURS_", path = ".", nDays = 90, stYrs = 2017,
-  stMDs = list(APR = 15), fnStartLocs = "OSCURS_StartLocations.csv",
-  wcsc = 1, wad = 0, gsf = 1,
+doOSCURS(
+  fnBase = "OSCURS_",
+  path = ".",
+  nDays = 90,
+  stYrs = 2017,
+  stMDs = list(APR = 15),
+  fnStartLocs = "OSCURS_StartLocations.csv",
+  wcsc = 1,
+  wad = 0,
+  gsf = 1,
   link = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?",
-  randNum = round(runif(1, 1, 1e+05)),
+  randNum = round(stats::runif(1, 1, 1e+05)),
   strCRS = tmaptools::get_proj4(3338, output = "character"),
-  basemap = wtsGIS::createBaseTMap(layer.land =
-  wtsGIS::getPackagedLayer("Alaska"), layer.bathym =
-  wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
-  alpha = 1, showMap = TRUE, verbose = FALSE)
+  basemap = wtsGIS::createBaseTMap(layer.land = wtsGIS::getPackagedLayer("Alaska"),
+    layer.bathym = wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
+  alpha = 1,
+  showMap = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{fnBase}{- base for output filenames (default = "OSCURS_")}
