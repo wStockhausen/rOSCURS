@@ -11,13 +11,13 @@ plotPTI(
   addText = TRUE,
   text_col = "year",
   text_size = 1,
-  strCRS = tmaptools::get_proj4(3338, output = "character"),
+  strCRS = tmaptools::get_proj4(4326, output = "character"),
   basemap = wtsGIS::createBaseTMap(layer.land = wtsGIS::getPackagedLayer("Alaska"),
     layer.bathym = wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
-  bounding_box = tmaptools::bb(xlim = c(-165, -135), ylim = c(48, 59),
-    current.projection = tmaptools::get_proj4("longlat", output = "character"), projection
-    = strCRS),
-  gridLines = list(x = seq(from = -165, to = -135, by = 5), y = seq(from = 48, to = 59,
+  bounding_box = tmaptools::bb(xlim = c(-160, -130), ylim = c(46, 61),
+    current.projection = tmaptools::get_proj4("longlat", output = "character"),
+    projection = strCRS),
+  gridLines = list(x = seq(from = -160, to = -130, by = 5), y = seq(from = 46, to = 60,
     by = 2), projection = tmaptools::get_proj4("longlat", output = "character")),
   style = NULL,
   color_lines = "blue",
@@ -77,7 +77,7 @@ The returned list has the following elements:
  * map       - a tmap object
  * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
  * startLocs - a sf tibble with starting track locations as points to "roll your own" map
- * endLocs - a sf tibble with ending track locations as points to "roll your own" map
+ * endLocs   - a sf tibble with ending track locations as points to "roll your own" map
  * basemap   - a basemap to "roll your own" map
 
 The map object is in the coordinate reference system given by strCRS.
