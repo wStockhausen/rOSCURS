@@ -13,15 +13,25 @@ convertOSCURStoTbl(
 )
 }
 \arguments{
-\item{fnBase}{- base for OSCURS output filenames to process (default = "./OSCURS_")}
+\item{fnBase}{\itemize{
+\item base for OSCURS output filenames to process (default = "./OSCURS_")
+}}
 
-\item{stYrs}{- start years for OSCURS files (vector)}
+\item{stYrs}{\itemize{
+\item start years for OSCURS files (vector)
+}}
 
-\item{stMDs}{- start months/days for OSCURS files (list)}
+\item{stMDs}{\itemize{
+\item start months/days for OSCURS files (list)
+}}
 
-\item{stLLs}{- a dataframe with starting locations for particle releases}
+\item{stLLs}{\itemize{
+\item a dataframe with starting locations for particle releases
+}}
 
-\item{verbose}{- flag to print diagnostic output}
+\item{verbose}{\itemize{
+\item flag to print diagnostic output
+}}
 }
 \value{
 list with elements "dfr" (a dataframe) and "tracks" (a spatial tibble using sf line geometry classes)

@@ -14,9 +14,8 @@ plotPTI(
   strCRS = tmaptools::get_proj4(4326, output = "character"),
   basemap = wtsGIS::createBaseTMap(layer.land = wtsGIS::getPackagedLayer("Alaska"),
     layer.bathym = wtsGIS::getPackagedLayer("ShelfBathymetry"), strCRS.finl = strCRS),
-  bounding_box = tmaptools::bb(xlim = c(-160, -130), ylim = c(46, 61),
-    current.projection = tmaptools::get_proj4("longlat", output = "character"),
-    projection = strCRS),
+  bounding_box = tmaptools::bb(xlim = c(-160, -130), ylim = c(46, 61), current.projection
+    = tmaptools::get_proj4("longlat", output = "character"), projection = strCRS),
   gridLines = list(x = seq(from = -160, to = -130, by = 5), y = seq(from = 46, to = 60,
     by = 2), projection = tmaptools::get_proj4("longlat", output = "character")),
   style = NULL,
@@ -30,55 +29,95 @@ plotPTI(
 )
 }
 \arguments{
-\item{tracks}{- a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})}
+\item{tracks}{\itemize{
+\item a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})
+}}
 
-\item{trackID_col}{- column with unique track id}
+\item{trackID_col}{\itemize{
+\item column with unique track id
+}}
 
-\item{emphasizeID}{- if not NULL, id of track to emphasize (default=\code{as.character(max(as.numeric(tracks[[trackID_col]])))})}
+\item{emphasizeID}{\itemize{
+\item if not NULL, id of track to emphasize (default=\code{as.character(max(as.numeric(tracks[[trackID_col]])))})
+}}
 
-\item{addText}{- flag (T/F) to add text in \code{text_col} to end point of each track}
+\item{addText}{\itemize{
+\item flag (T/F) to add text in \code{text_col} to end point of each track
+}}
 
-\item{text_col}{- column for text labels}
+\item{text_col}{\itemize{
+\item column for text labels
+}}
 
-\item{text_size}{- size for "year" label on last end point (others will be 0.8*text_size)}
+\item{text_size}{\itemize{
+\item size for "year" label on last end point (others will be 0.8*text_size)
+}}
 
-\item{strCRS}{- character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])}
+\item{strCRS}{\itemize{
+\item character representation of coordinate reference system for final map (default is Alaska Albers \link{EPSG=3338})
+}}
 
-\item{basemap}{- a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)}
+\item{basemap}{\itemize{
+\item a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)
+}}
 
-\item{bounding_box}{- bounding box for map (or NULL to calculate from track limits)}
+\item{bounding_box}{\itemize{
+\item bounding box for map (or NULL to calculate from track limits)
+}}
 
-\item{gridLines}{- list w/ info to plot grid lines on map (or NULL for no grid lines)}
+\item{gridLines}{\itemize{
+\item list w/ info to plot grid lines on map (or NULL for no grid lines)
+}}
 
-\item{style}{- \code{tmap} style for map (default is NULL, which uses current tmap style)}
+\item{style}{\itemize{
+\item \code{tmap} style for map (default is NULL, which uses current tmap style)
+}}
 
-\item{color_lines}{- color for track lines (or column name)}
+\item{color_lines}{\itemize{
+\item color for track lines (or column name)
+}}
 
-\item{color_text}{- color for track line text (or column name)}
+\item{color_text}{\itemize{
+\item color for track line text (or column name)
+}}
 
-\item{alpha_lines}{- transparency for track lines}
+\item{alpha_lines}{\itemize{
+\item transparency for track lines
+}}
 
-\item{alpha_text}{- transparency for track line text}
+\item{alpha_text}{\itemize{
+\item transparency for track line text
+}}
 
-\item{palette}{- color palette for text}
+\item{palette}{\itemize{
+\item color palette for text
+}}
 
-\item{showMap}{- flag to show the map}
+\item{showMap}{\itemize{
+\item flag to show the map
+}}
 
-\item{verbose}{- flag to print diagnostic info}
+\item{verbose}{\itemize{
+\item flag to print diagnostic info
+}}
 }
 \value{
-- a list (see details)
+\itemize{
+\item a list (see details)
+}
 }
 \description{
 Function to plot particle tracks from OSCURS model runs on a map for the PAPA Trajectory Index.
 }
 \details{
 The returned list has the following elements:
- * map       - a tmap object
- * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
- * startLocs - a sf tibble with starting track locations as points to "roll your own" map
- * endLocs   - a sf tibble with ending track locations as points to "roll your own" map
- * basemap   - a basemap to "roll your own" map
+\itemize{
+\item map       - a tmap object
+\item tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
+\item startLocs - a sf tibble with starting track locations as points to "roll your own" map
+\item endLocs   - a sf tibble with ending track locations as points to "roll your own" map
+\item basemap   - a basemap to "roll your own" map
+}
 
 The map object is in the coordinate reference system given by strCRS.
 

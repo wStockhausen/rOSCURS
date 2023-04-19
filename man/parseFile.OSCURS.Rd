@@ -7,9 +7,13 @@
 parseFile.OSCURS(fn, verbose = FALSE)
 }
 \arguments{
-\item{fn}{- name of file to parse}
+\item{fn}{\itemize{
+\item name of file to parse
+}}
 
-\item{verbose}{- flag to print diagnostic info}
+\item{verbose}{\itemize{
+\item flag to print diagnostic info
+}}
 }
 \value{
 a list with elements "dfr" and "track". The latter is a spatial tibble using a sf line class to represent the track.

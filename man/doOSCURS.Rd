@@ -25,37 +25,69 @@ doOSCURS(
 )
 }
 \arguments{
-\item{fnBase}{- base for output filenames (default = "OSCURS_")}
+\item{fnBase}{\itemize{
+\item base for output filenames (default = "OSCURS_")
+}}
 
-\item{path}{- path to folder in which to store output files}
+\item{path}{\itemize{
+\item path to folder in which to store output files
+}}
 
-\item{nDays}{- number of days to run model}
+\item{nDays}{\itemize{
+\item number of days to run model
+}}
 
-\item{stYrs}{- vector of years for particle releases}
+\item{stYrs}{\itemize{
+\item vector of years for particle releases
+}}
 
-\item{stMDs}{- list of release dates, by month}
+\item{stMDs}{\itemize{
+\item list of release dates, by month
+}}
 
-\item{fnStartLocs}{- filename for csv file with initial particle lat/lon locations}
+\item{fnStartLocs}{\itemize{
+\item filename for csv file with initial particle lat/lon locations
+}}
 
-\item{wcsc}{- wind/current speed coefficient (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+\item{wcsc}{\itemize{
+\item wind/current speed coefficient (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+}}
 
-\item{wad}{- wind angle deviation (default=0.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+\item{wad}{\itemize{
+\item wind angle deviation (default=0.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+}}
 
-\item{gsf}{- geostrophic speed factor (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+\item{gsf}{\itemize{
+\item geostrophic speed factor (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+}}
 
-\item{link}{- url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")}
+\item{link}{\itemize{
+\item url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")
+}}
 
-\item{randNum}{- random number to add to server-side file name to ensure uniqueness}
+\item{randNum}{\itemize{
+\item random number to add to server-side file name to ensure uniqueness
+}}
 
-\item{strCRS}{- character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])}
+\item{strCRS}{\itemize{
+\item character representation of coordinate reference system for final map (default is Alaska Albers \link{EPSG=3338})
+}}
 
-\item{basemap}{- a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)}
+\item{basemap}{\itemize{
+\item a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)
+}}
 
-\item{alpha}{- transparency for track lines}
+\item{alpha}{\itemize{
+\item transparency for track lines
+}}
 
-\item{showMap}{- flag to show the map}
+\item{showMap}{\itemize{
+\item flag to show the map
+}}
 
-\item{verbose}{- flag to print diagnostic info}
+\item{verbose}{\itemize{
+\item flag to print diagnostic info
+}}
 }
 \value{
 same list as \code{plotOSCURS} (see @details).
@@ -66,8 +98,10 @@ Function to run OSCURS and plot results.
 \details{
 Requires packages \code{readr}, \code{tmaptools}, \code{wtsGIS}.
 The returned list has the following elements:
- * map       - a tmap object
- * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
- * startLocs - a sf tibble with starting track locations as points to "roll your own" map
- * basemap   - a basemap to "roll your own" map
+\itemize{
+\item map       - a tmap object
+\item tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
+\item startLocs - a sf tibble with starting track locations as points to "roll your own" map
+\item basemap   - a basemap to "roll your own" map
+}
 }

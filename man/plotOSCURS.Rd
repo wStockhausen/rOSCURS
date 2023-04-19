@@ -17,34 +17,54 @@ plotOSCURS(
 )
 }
 \arguments{
-\item{tracks}{- a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})}
+\item{tracks}{\itemize{
+\item a tibble with OSCURS tracks (e.g., the \code{tracks} list element from a call to \code{convertOSCURStoTbl})
+}}
 
-\item{stLLs}{- a dataframe or tibble with starting particle locations (e.g., from reading the initial particle locations csv file using \code{readr::read_csv})}
+\item{stLLs}{\itemize{
+\item a dataframe or tibble with starting particle locations (e.g., from reading the initial particle locations csv file using \code{readr::read_csv})
+}}
 
-\item{idCol}{- name or number of stLLs column to use as a unique identifier for the start locations (default=NULL. See details)}
+\item{idCol}{\itemize{
+\item name or number of stLLs column to use as a unique identifier for the start locations (default=NULL. See details)
+}}
 
-\item{strCRS}{- character representation of coordinate reference system for final map (default is Alaska Albers [EPSG=3338])}
+\item{strCRS}{\itemize{
+\item character representation of coordinate reference system for final map (default is Alaska Albers \link{EPSG=3338})
+}}
 
-\item{basemap}{- a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)}
+\item{basemap}{\itemize{
+\item a base map for plotting the tracks (default is the EBS using CRS defined by strCRS)
+}}
 
-\item{alpha}{- transparency for track lines}
+\item{alpha}{\itemize{
+\item transparency for track lines
+}}
 
-\item{showMap}{- flag to show the map}
+\item{showMap}{\itemize{
+\item flag to show the map
+}}
 
-\item{verbose}{- flag to print diagnostic info}
+\item{verbose}{\itemize{
+\item flag to print diagnostic info
+}}
 }
 \value{
-- a list (see details)
+\itemize{
+\item a list (see details)
+}
 }
 \description{
 Function to plot particle tracks from OSCURS model runs on a map.
 }
 \details{
 The returned list has the following elements:
- * map       - a tmap object
- * tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
- * startLocs - a sf tibble with starting track locations as points to "roll your own" map
- * basemap   - a basemap to "roll your own" map
+\itemize{
+\item map       - a tmap object
+\item tracks    - a sf tibble with tracks that span the IDL to "roll your own" map
+\item startLocs - a sf tibble with starting track locations as points to "roll your own" map
+\item basemap   - a basemap to "roll your own" map
+}
 
 The map object is in the Alaska Albers projection. If 'idCol' is NULL, then each row in stLLs is assumed to
 represent a unique starting location.

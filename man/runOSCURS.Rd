@@ -21,31 +21,57 @@ runOSCURS(
 )
 }
 \arguments{
-\item{fnBase}{- base for filenames (default = "OSCURS_")}
+\item{fnBase}{\itemize{
+\item base for filenames (default = "OSCURS_")
+}}
 
-\item{path}{- path to use with output filenames (default = ".")}
+\item{path}{\itemize{
+\item path to use with output filenames (default = ".")
+}}
 
-\item{nDays}{- number of days to run model}
+\item{nDays}{\itemize{
+\item number of days to run model
+}}
 
-\item{stYrs}{- vector of years for particle releases}
+\item{stYrs}{\itemize{
+\item vector of years for particle releases
+}}
 
-\item{stMDs}{- list of release dates, by month}
+\item{stMDs}{\itemize{
+\item list of release dates, by month
+}}
 
-\item{stLLs}{- a dataframe or tibble with initial particle lat/lon locations (see details below)}
+\item{stLLs}{\itemize{
+\item a dataframe or tibble with initial particle lat/lon locations (see details below)
+}}
 
-\item{link}{- url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")}
+\item{link}{\itemize{
+\item url to run OSCURS (default = "https://oceanview.pfeg.noaa.gov/oscurs/runOscurs9.php?")
+}}
 
-\item{wcsc}{- wind/current speed coefficient (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+\item{wcsc}{\itemize{
+\item wind/current speed coefficient (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+}}
 
-\item{wad}{- wind angle deviation (default=0.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+\item{wad}{\itemize{
+\item wind angle deviation (default=0.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+}}
 
-\item{gsf}{- geostrophic speed factor (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)}
+\item{gsf}{\itemize{
+\item geostrophic speed factor (default=1.0; see https://oceanview.pfeg.noaa.gov/oscurs/)
+}}
 
-\item{randNum}{- random number to add to server-side file name to ensure uniqueness}
+\item{randNum}{\itemize{
+\item random number to add to server-side file name to ensure uniqueness
+}}
 
-\item{test}{- flag to print diagnostic output but NOT run OSCURS (useful to see what commands will be sent)}
+\item{test}{\itemize{
+\item flag to print diagnostic output but NOT run OSCURS (useful to see what commands will be sent)
+}}
 
-\item{verbose}{- flag to print diagnostic output}
+\item{verbose}{\itemize{
+\item flag to print diagnostic output
+}}
 }
 \description{
 Function to make a series of OSCURS runs and download the results to a set of files.
@@ -56,6 +82,8 @@ form fnBase_year_month_day_latdegree_latminute_londegree_lonminute.csv, where la
 particle location.
 
 The input parameter \code{stLLs} should be a dataframe or tibble. The following columns are required:
- * LATITUDE   - latitude in decimal degrees (-90 to 90)
- * LONGITUDE  - longitude in decimal degrees (-180 to 180)
+\itemize{
+\item LATITUDE   - latitude in decimal degrees (-90 to 90)
+\item LONGITUDE  - longitude in decimal degrees (-180 to 180)
+}
 }

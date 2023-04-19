@@ -1,12 +1,12 @@
 Package: rOSCURS
 Type: Package
 Title: Package to run OSCURS and process results.
-Version: 2021.07.26
-Date: 2021-07-26
+Version: 2023.04.19
+Date: 2023-04-19
 Author: William Stockhausen (NOAA/NMFS/AFSC)
 Maintainer: William Stockhausen <william.stockhausen@noaa.gov>
 Description: Contains functions to run OSCURS and process results.
-License: MIT
+License: MIT + LICENSE
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 Imports:
@@ -24,4 +24,5 @@ Imports:
     utils,
     wtsGIS (>= 2019.02.07),
     wtsUtilities (>= 2016.09.02)
-RoxygenNote: 7.1.1
+Roxygen: list(markdown=TRUE)
+RoxygenNote: 7.2.3
